@@ -33,6 +33,34 @@ This changes nothing. `NULL` for warehouse, database, or schema is acceptable. R
 
 Use browser/SSO, an ignored local profile, or carefully configured key-pair authentication. Never hard-code credentials. Avoid `ACCOUNTADMIN` for ordinary work.
 
+### Python route
+
+Install the connector in your virtual environment:
+
+```powershell
+python -m pip install snowflake-connector-python
+```
+
+Set your credentials only in the current terminal session. Replace the
+placeholder values locally; do not commit them or paste them into chat:
+
+```powershell
+$env:SNOWFLAKE_USER = "your_username"
+$env:SNOWFLAKE_PASSWORD = "your_password"
+$env:SNOWFLAKE_ACCOUNT = "your_account_identifier"
+$env:SNOWFLAKE_WAREHOUSE = "COMPUTE_WH"
+$env:SNOWFLAKE_ROLE = "SYSADMIN"
+```
+
+Run the read-only check from the repository root:
+
+```powershell
+python phases/phase-00-setup/check_identity.py
+```
+
+Expected result: the script prints your session context, including `SYSADMIN`
+and `COMPUTE_WH`. It does not create or modify Snowflake resources.
+
 ## Checkpoint
 
 1. What does `CURRENT_ROLE()` tell you and why does it matter?
