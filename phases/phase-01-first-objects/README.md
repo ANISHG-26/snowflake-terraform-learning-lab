@@ -102,7 +102,145 @@ role and the object names, but do not paste account-specific details into this
 repository. Stop here before creating the stage; we will review the result and
 then create the ingestion stage as a separate checkpoint.
 
-## Checkpoint 3 — Create and load the RAW table
+## Checkpoint 3 — Create the internal ingestion stage
+
+A stage is Snowflake-managed storage used as a landing point for files before
+`COPY INTO` loads them into tables. It is not a table and does not define the
+columns or data types. For this workshop, create one internal stage inside the
+`RAW` schema:
+
+```sql
+USE DATABASE GARAGE_PROD;
+USE SCHEMA RAW;
+
+CREATE STAGE IF NOT EXISTS GARAGE_CSV_STAGE;
+
+SHOW STAGES IN SCHEMA GARAGE_PROD.RAW;
+```
+
+Expected result: one stage named `GARAGE_CSV_STAGE`. In Snowsight, open the
+stage from **Data → Databases → GARAGE_PROD → RAW → Stages** and confirm it is
+empty. A stage stores files; it does not describe how Snowflake should parse
+them.
+
+## Checkpoint 4 — Define the CSV file format
+
+A file format is a reusable parsing rulebook for staged files. It specifies
+details such as the delimiter, header row, quoted values, and null handling.
+Create one named CSV format:
+
+```sql
+USE DATABASE GARAGE_PROD;
+USE SCHEMA RAW;
+
+CREATE FILE FORMAT IF NOT EXISTS GARAGE_CSV_FORMAT
+  TYPE = CSV
+  FIELD_DELIMITER = ','
+  SKIP_HEADER = 1
+  FIELD_OPTIONALLY_ENCLOSED_BY = '"'
+  EMPTY_FIELD_AS_NULL = TRUE
+  NULL_IF = ('', 'NULL', 'null');
+
+SHOW FILE FORMATS IN SCHEMA GARAGE_PROD.RAW;
+```
+
+### Load staged CSV files
+
+After verifying the five files with `LIST`, load them in dependency order. Keep
+`ON_ERROR = 'ABORT_STATEMENT'` so a bad file does not silently produce a
+partial learning result.
+
+```sql
+USE DATABASE GARAGE_PROD;
+USE SCHEMA RAW;
+
+COPY INTO MANUFACTURERS
+FROM @GARAGE_CSV_STAGE/manufacturers.csv
+FILE_FORMAT = (FORMAT_NAME = GARAGE_CSV_FORMAT)
+ON_ERROR = 'ABORT_STATEMENT';
+
+COPY INTO DEALERSHIPS
+FROM @GARAGE_CSV_STAGE/dealerships.csv
+FILE_FORMAT = (FORMAT_NAME = GARAGE_CSV_FORMAT)
+ON_ERROR = 'ABORT_STATEMENT';
+
+COPY INTO VEHICLES
+FROM @GARAGE_CSV_STAGE/vehicles.csv
+FILE_FORMAT = (FORMAT_NAME = GARAGE_CSV_FORMAT)
+ON_ERROR = 'ABORT_STATEMENT';
+
+COPY INTO INVENTORY
+FROM @GARAGE_CSV_STAGE/inventory.csv
+FILE_FORMAT = (FORMAT_NAME = GARAGE_CSV_FORMAT)
+ON_ERROR = 'ABORT_STATEMENT';
+
+COPY INTO SERVICE_RECORDS
+FROM @GARAGE_CSV_STAGE/service_records.csv
+FILE_FORMAT = (FORMAT_NAME = GARAGE_CSV_FORMAT)
+ON_ERROR = 'ABORT_STATEMENT';
+
+SELECT 'MANUFACTURERS' AS table_name, COUNT(*) AS row_count FROM MANUFACTURERS
+UNION ALL SELECT 'DEALERSHIPS', COUNT(*) FROM DEALERSHIPS
+UNION ALL SELECT 'VEHICLES', COUNT(*) FROM VEHICLES
+UNION ALL SELECT 'INVENTORY', COUNT(*) FROM INVENTORY
+UNION ALL SELECT 'SERVICE_RECORDS', COUNT(*) FROM SERVICE_RECORDS;
+```
+
+Expected counts are 5 manufacturers, 20 dealerships, and 300 rows in each of
+the three operational tables. After the load, run the validation queries in
+the next checkpoint before creating the analytics view.
+
+## Checkpoint 6 — Validate the loaded data
+
+```sql
+-- Duplicate key checks: each query should return zero rows.
+SELECT manufacturer_id, COUNT(*) FROM MANUFACTURERS
+GROUP BY manufacturer_id HAVING COUNT(*) > 1;
+
+SELECT dealership_id, COUNT(*) FROM DEALERSHIPS
+GROUP BY dealership_id HAVING COUNT(*) > 1;
+
+SELECT vehicle_id, COUNT(*) FROM VEHICLES
+GROUP BY vehicle_id HAVING COUNT(*) > 1;
+
+SELECT inventory_id, COUNT(*) FROM INVENTORY
+GROUP BY inventory_id HAVING COUNT(*) > 1;
+
+SELECT service_id, COUNT(*) FROM SERVICE_RECORDS
+GROUP BY service_id HAVING COUNT(*) > 1;
+
+-- Orphan checks: each query should return zero rows.
+SELECT v.vehicle_id FROM VEHICLES v
+LEFT JOIN MANUFACTURERS m ON m.manufacturer_id = v.manufacturer_id
+WHERE m.manufacturer_id IS NULL;
+
+SELECT i.inventory_id FROM INVENTORY i
+LEFT JOIN VEHICLES v ON v.vehicle_id = i.vehicle_id
+LEFT JOIN DEALERSHIPS d ON d.dealership_id = i.dealership_id
+WHERE v.vehicle_id IS NULL OR d.dealership_id IS NULL;
+
+SELECT s.service_id FROM SERVICE_RECORDS s
+LEFT JOIN VEHICLES v ON v.vehicle_id = s.vehicle_id
+WHERE v.vehicle_id IS NULL;
+
+-- Domain checks: each query should return zero rows.
+SELECT * FROM INVENTORY
+WHERE status NOT IN ('IN_STOCK', 'IN_TRANSIT', 'SOLD');
+
+SELECT * FROM VEHICLES
+WHERE fuel_type NOT IN ('Gasoline', 'Hybrid', 'Electric', 'Diesel');
+```
+
+Do not upload files yet. Inspect the format and confirm that the delimiter is
+`,` and the header row is skipped. A pipe-delimited file would use
+`FIELD_DELIMITER = '|'` instead.
+
+Cleaning functions are a separate concern: SQL functions such as `TRIM`,
+`UPPER`, `TRY_TO_NUMBER`, and `TRY_TO_DATE` transform values during a query or
+load. The stage stores files, and the file format parses files; neither one
+automatically cleans business data.
+
+## Checkpoint 5 — Create and load the RAW tables
 
 Create five `RAW` tables with explicit Snowflake data types. Load the CSVs
 through Python using a narrowly scoped stage and `COPY INTO`. Load reference
@@ -154,3 +292,111 @@ Snowflake resources are created in Checkpoint 1.
 
 1. Why should a reader role receive `SELECT` on a view instead of broad database access?
 2. What happens if the warehouse is suspended while the table still exists?
+
+## Phase 1 command log
+
+This section keeps the runnable Snowsight commands in workshop order.
+
+### Foundation
+
+```sql
+CREATE DATABASE IF NOT EXISTS GARAGE_PROD;
+CREATE SCHEMA IF NOT EXISTS GARAGE_PROD.RAW;
+CREATE SCHEMA IF NOT EXISTS GARAGE_PROD.ANALYTICS;
+
+SHOW DATABASES LIKE 'GARAGE_PROD';
+SHOW SCHEMAS IN DATABASE GARAGE_PROD;
+```
+
+### Stage and file format
+
+```sql
+USE DATABASE GARAGE_PROD;
+USE SCHEMA RAW;
+
+CREATE STAGE IF NOT EXISTS GARAGE_CSV_STAGE;
+SHOW STAGES IN SCHEMA GARAGE_PROD.RAW;
+LIST @GARAGE_CSV_STAGE;
+
+CREATE FILE FORMAT IF NOT EXISTS GARAGE_CSV_FORMAT
+  TYPE = CSV
+  FIELD_DELIMITER = ','
+  SKIP_HEADER = 1
+  FIELD_OPTIONALLY_ENCLOSED_BY = '"'
+  EMPTY_FIELD_AS_NULL = TRUE
+  NULL_IF = ('', 'NULL', 'null');
+
+SHOW FILE FORMATS IN SCHEMA GARAGE_PROD.RAW;
+```
+
+### RAW tables
+
+The complete idempotent table-creation block is recorded below. Run it after
+the foundation, stage, and file-format commands.
+
+```sql
+USE DATABASE GARAGE_PROD;
+USE SCHEMA RAW;
+
+CREATE TABLE IF NOT EXISTS MANUFACTURERS (
+    manufacturer_id VARCHAR(10) NOT NULL,
+    manufacturer_name VARCHAR(100) NOT NULL,
+    country VARCHAR(60) NOT NULL,
+    CONSTRAINT pk_manufacturers PRIMARY KEY (manufacturer_id)
+);
+
+CREATE TABLE IF NOT EXISTS DEALERSHIPS (
+    dealership_id VARCHAR(10) NOT NULL,
+    dealership_name VARCHAR(120) NOT NULL,
+    region VARCHAR(60) NOT NULL,
+    CONSTRAINT pk_dealerships PRIMARY KEY (dealership_id)
+);
+
+CREATE TABLE IF NOT EXISTS VEHICLES (
+    vehicle_id VARCHAR(10) NOT NULL,
+    manufacturer_id VARCHAR(10) NOT NULL,
+    model VARCHAR(80) NOT NULL,
+    model_year NUMBER(4,0) NOT NULL,
+    fuel_type VARCHAR(20) NOT NULL,
+    color VARCHAR(30) NOT NULL,
+    price_usd NUMBER(10,2) NOT NULL,
+    CONSTRAINT pk_vehicles PRIMARY KEY (vehicle_id),
+    CONSTRAINT fk_vehicles_manufacturer FOREIGN KEY (manufacturer_id)
+        REFERENCES MANUFACTURERS (manufacturer_id)
+);
+
+CREATE TABLE IF NOT EXISTS INVENTORY (
+    inventory_id VARCHAR(10) NOT NULL,
+    vehicle_id VARCHAR(10) NOT NULL,
+    dealership_id VARCHAR(10) NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    CONSTRAINT pk_inventory PRIMARY KEY (inventory_id),
+    CONSTRAINT fk_inventory_vehicle FOREIGN KEY (vehicle_id)
+        REFERENCES VEHICLES (vehicle_id),
+    CONSTRAINT fk_inventory_dealership FOREIGN KEY (dealership_id)
+        REFERENCES DEALERSHIPS (dealership_id)
+);
+
+CREATE TABLE IF NOT EXISTS SERVICE_RECORDS (
+    service_id VARCHAR(10) NOT NULL,
+    vehicle_id VARCHAR(10) NOT NULL,
+    service_type VARCHAR(40) NOT NULL,
+    service_date DATE NOT NULL,
+    cost_usd NUMBER(10,2) NOT NULL,
+    CONSTRAINT pk_service_records PRIMARY KEY (service_id),
+    CONSTRAINT fk_service_vehicle FOREIGN KEY (vehicle_id)
+        REFERENCES VEHICLES (vehicle_id)
+);
+
+SHOW TABLES IN SCHEMA GARAGE_PROD.RAW;
+```
+
+### Table inspection
+
+```sql
+DESC TABLE GARAGE_PROD.RAW.MANUFACTURERS;
+DESC TABLE GARAGE_PROD.RAW.DEALERSHIPS;
+DESC TABLE GARAGE_PROD.RAW.VEHICLES;
+DESC TABLE GARAGE_PROD.RAW.INVENTORY;
+DESC TABLE GARAGE_PROD.RAW.SERVICE_RECORDS;
+```
