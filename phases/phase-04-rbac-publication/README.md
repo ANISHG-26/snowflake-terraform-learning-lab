@@ -1,5 +1,14 @@
-# Phase 4 — Roles and publication
+# Phase 4 — RBAC and governed publication
 
-Build scoped ownership, team, and consumer roles. Create `CAR_PUBLIC` and test allowed and denied operations.
+Phase 1 introduced isolated loader and reader roles. This phase evolves that
+foundation into platform ownership, team sandbox access, and a stable
+`GARAGE_PUBLIC` publication layer that does not depend directly on a disposable
+team clone.
 
-Checkpoint: explain `OWNERSHIP`, `USAGE`, and `SELECT` from `SHOW GRANTS`.
+Test each role with secondary roles disabled and capture both allowed and
+expected-denied operations. Compare object ownership, database/schema `USAGE`,
+table/view `SELECT`, future grants, and the grants retained or omitted during
+cloning.
+
+Checkpoint: explain `OWNERSHIP`, `USAGE`, `SELECT`, role hierarchy, and why the
+public interface should survive replacement of a private sandbox.

@@ -58,8 +58,10 @@ Run the read-only check from the repository root:
 python phases/phase-00-setup/check_identity.py
 ```
 
-Expected result: the script prints your session context, including `SYSADMIN`
-and `COMPUTE_WH`. It does not create or modify Snowflake resources.
+Expected result: the script prints the role and warehouse configured for your
+connection. In this learning run they were `SYSADMIN` and `COMPUTE_WH`; another
+account can legitimately report different values. The script does not create
+or modify Snowflake resources.
 
 ## Completion checkpoint
 

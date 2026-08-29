@@ -3,9 +3,9 @@
 A guided, public portfolio project for learning Snowflake, SQL, Python automation, and Terraform by building a small self-service data platform for a synthetic garage business.
 
 ```text
-CAR_PROD (synthetic template)
-    +-- point-in-time clone --> CAR_PRIVATE_TEAM_A (writable, disposable)
-    +-- approved interface --> CAR_PUBLIC (read-only curated views)
+GARAGE_PROD (synthetic template)
+    +-- point-in-time clone --> GARAGE_PRIVATE_TEAM_A (writable, disposable)
+    +-- approved interface --> GARAGE_PUBLIC (read-only curated views)
 ```
 
 ## How we work
@@ -27,8 +27,7 @@ Tracked files must remain portfolio-safe. Account-specific observations and sess
 
 ## Current status
 
-- Python 3.12, Terraform 1.8.4, and Git are installed.
-- Snowflake CLI was not found during the initial check.
-- Phase 0 complete: Python made a successful read-only Snowflake connection.
-- No Snowflake resources have been created or modified.
-- Next: Phase 1 — create the first small Snowflake objects after reviewing the safety and cost implications.
+- Phase 0 complete: Snowsight and Python made a successful read-only Snowflake connection.
+- Phase 1 complete: `GARAGE_PROD` contains five synthetic raw tables, an analytics view, staged CSVs, and tested loader/reader roles.
+- The checked-in bootstrap can recreate the Phase 1 environment without assigning roles to a user.
+- Next: [Phase 2 — Template readiness](phases/phase-02-template-readiness/README.md).

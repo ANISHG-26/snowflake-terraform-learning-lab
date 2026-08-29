@@ -1,4 +1,4 @@
-"""Idempotently bootstrap the synthetic garage database.
+"""Non-destructively bootstrap the synthetic garage database.
 
 Credentials come from the existing environment/.env settings. This script
 creates and loads the Phase 1 objects; review it before running in a new
@@ -8,6 +8,7 @@ account. It does not drop or replace objects.
 from __future__ import annotations
 
 import os
+import re
 from pathlib import Path
 
 import snowflake.connector
@@ -27,6 +28,14 @@ def setting(name: str) -> str:
     value = os.getenv(name)
     if not value:
         raise ValueError(f"Missing required environment variable: {name}")
+    return value
+
+
+def identifier_setting(name: str) -> str:
+    """Read a simple unquoted Snowflake identifier from the environment."""
+    value = setting(name)
+    if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_$]*", value):
+        raise ValueError(f"{name} must be a simple unquoted Snowflake identifier")
     return value
 
 
@@ -51,6 +60,7 @@ def execute(role: str, statements: list[str]) -> None:
 
 def main() -> None:
     load_dotenv()
+    warehouse = identifier_setting("SNOWFLAKE_WAREHOUSE")
     # USERADMIN owns account role creation in the default Snowflake hierarchy.
     execute("USERADMIN", [
         "CREATE ROLE IF NOT EXISTS GARAGE_LOADER",
@@ -99,8 +109,8 @@ SELECT s.service_id, s.vehicle_id, m.manufacturer_name, v.model, v.model_year,
 v.fuel_type, s.service_type, s.service_date, s.cost_usd
 FROM {RAW}.SERVICE_RECORDS s JOIN {RAW}.VEHICLES v ON s.vehicle_id = v.vehicle_id
 JOIN {RAW}.MANUFACTURERS m ON v.manufacturer_id = m.manufacturer_id""",
-        "GRANT USAGE ON WAREHOUSE COMPUTE_WH TO ROLE GARAGE_LOADER",
-        "GRANT USAGE ON WAREHOUSE COMPUTE_WH TO ROLE GARAGE_READER",
+        f"GRANT USAGE ON WAREHOUSE {warehouse} TO ROLE GARAGE_LOADER",
+        f"GRANT USAGE ON WAREHOUSE {warehouse} TO ROLE GARAGE_READER",
         f"GRANT USAGE ON DATABASE {DATABASE} TO ROLE GARAGE_LOADER",
         f"GRANT USAGE ON DATABASE {DATABASE} TO ROLE GARAGE_READER",
         f"GRANT USAGE ON SCHEMA {RAW} TO ROLE GARAGE_LOADER",

@@ -13,8 +13,11 @@ Snowflake trial account.
 - Roles: `GARAGE_LOADER`, `GARAGE_READER`
 - Five synthetic CSV uploads and their table loads
 
-The script is idempotent for this project: it uses `IF NOT EXISTS`, does not
-drop objects, and does not assign roles to a user.
+The script is non-destructive and safely rerunnable for the supplied dataset:
+it uses `IF NOT EXISTS`, does not drop objects, and does not assign roles to a
+user. It is not a general reconciliation engine: changed table definitions are
+not migrated, existing staged filenames are not overwritten, and Snowflake can
+skip filenames already recorded in load history.
 
 ## Prerequisites
 
@@ -53,8 +56,8 @@ tokens, private keys, or connection strings in tracked Markdown or Python.
 From the repository root:
 
 ```powershell
-python phases/phase-01-first-objects/generate_vehicles.py
-python phases/phase-01-first-objects/setup_garage.py
+python phases/phase-01-garage-foundation/generate_vehicles.py
+python phases/phase-01-garage-foundation/setup_garage.py
 ```
 
 The first command regenerates the five deterministic CSV files. The second

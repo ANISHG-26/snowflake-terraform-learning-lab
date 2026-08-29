@@ -31,13 +31,13 @@ This is a public-facing portfolio repository and a hands-on learning project. He
 - Confirm active account, role, warehouse, database, and schema before mutations.
 - Avoid `ACCOUNTADMIN` for routine work; explain one-time bootstrap needs.
 - Prefer X-Small auto-suspending warehouses and targeted cleanup.
-- Protect `CAR_PROD` from automated destruction.
+- Protect `GARAGE_PROD` from automated destruction.
 
 ## Architecture defaults
 
-- `CAR_PROD`: synthetic template, not real production.
-- `CAR_PRIVATE_TEAM_A`: writable disposable clone.
-- `CAR_PUBLIC`: stable governed read-only publication layer.
+- `GARAGE_PROD`: synthetic template, not real production.
+- `GARAGE_PRIVATE_TEAM_A`: writable disposable clone.
+- `GARAGE_PUBLIC`: stable governed read-only publication layer.
 - A clone is an independent point-in-time copy, not a synchronized replica.
 - Public views should not depend directly on a disposable team sandbox by default.
 - Use SQL first, Python for procedural lifecycle automation, and Terraform later for stable declarative infrastructure.

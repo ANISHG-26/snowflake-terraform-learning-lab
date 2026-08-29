@@ -12,6 +12,10 @@ for garage staff and reporting users. The five source tables are deliberately
 small, but they represent reference, master, location, inventory, and service
 data.
 
+The generated service dates form an intentional synthetic 2025 snapshot. They
+are fixed for deterministic learning results rather than generated relative to
+the day the script runs.
+
 ## Tables and Snowflake types
 
 | Table | Column | Type | Key / meaning |
@@ -47,9 +51,8 @@ duplicate, null, and domain-value checks after loading.
 ## Dependency and load order
 
 ```text
-MANUFACTURERS ──┐
-                └──> VEHICLES ──┬──> INVENTORY ──> DEALERSHIPS
-                                └──> SERVICE_RECORDS
+MANUFACTURERS ──> VEHICLES ──┬──> INVENTORY <── DEALERSHIPS
+                             └──> SERVICE_RECORDS
 ```
 
 Recommended load order:

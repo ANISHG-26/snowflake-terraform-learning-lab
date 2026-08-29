@@ -61,7 +61,7 @@ is only a file format; it has no Snowflake permissions or schema guarantees.
 
 ## Checkpoint 2 — Create the database and schemas
 
-Using Python, create `GARAGE_PROD`, `RAW`, and `ANALYTICS` with idempotent SQL
+Using Python, create `GARAGE_PROD`, `RAW`, and `ANALYTICS` with safely rerunnable SQL
 (`CREATE ... IF NOT EXISTS`). Inspect them with `SHOW DATABASES` and
 `SHOW SCHEMAS`. Then explain the difference between a database and schema,
 stored data and warehouse compute, and `RAW` versus `ANALYTICS`.
@@ -279,10 +279,10 @@ After reviewing the SQL and completing the hands-on route, rerun this phase in
 another trial account with:
 
 ```powershell
-python phases/phase-01-first-objects/setup_garage.py
+python phases/phase-01-garage-foundation/setup_garage.py
 ```
 
-The script is idempotent and uses the existing environment or ignored `.env`
+The script is non-destructive and safely rerunnable for the supplied dataset. It uses the existing environment or ignored `.env`
 credentials. It connects as `USERADMIN` to create roles, then as `SYSADMIN` to
 create objects, grants, upload files, and load data. It does not drop objects
 or assign roles to a user; user-role assignment remains an explicit
@@ -322,7 +322,7 @@ SHOW FILE FORMATS IN SCHEMA GARAGE_PROD.RAW;
 
 ### RAW tables
 
-The complete idempotent table-creation block is recorded below. Run it after
+The complete safely rerunnable table-creation block is recorded below. Run it after
 the foundation, stage, and file-format commands.
 
 ```sql
