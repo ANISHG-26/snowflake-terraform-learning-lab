@@ -19,6 +19,7 @@ Each phase supports a Snowsight UI path, a small script path, and assisted imple
 3. Record sanitized observations in [LEARNING_NOTES.md](LEARNING_NOTES.md).
 4. Use [ROADMAP.md](ROADMAP.md) as the course index.
 5. Use [SNOWFLAKE_WIKI.md](SNOWFLAKE_WIKI.md) as the running concept reference.
+6. Use [QUICK_BOOTSTRAP.md](QUICK_BOOTSTRAP.md) to recreate the garage in another trial account.
 
 ## Public and private context
 

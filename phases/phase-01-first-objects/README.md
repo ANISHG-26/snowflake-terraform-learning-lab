@@ -17,11 +17,11 @@ records are fictional.
 ```text
 GARAGE_PROD
 ├── RAW       -- landing tables loaded from CSV
-└── ANALYTICS -- curated view(s), initially derived from RAW
+└── ANALYTICS -- curated service and operations views
 
 Roles:
 SYSADMIN     -- setup owner for this learning phase
-GARAGE_LOADER -- can load RAW, cannot read ANALYTICS by default
+GARAGE_LOADER -- can load and inspect RAW, cannot read ANALYTICS by default
 GARAGE_READER -- can read approved ANALYTICS views, not RAW tables
 ```
 
@@ -54,13 +54,6 @@ The relationships are `vehicles.manufacturer_id`,
 The garage story is: a vehicle belongs to a manufacturer, may be held at a
 garage location, and can have service work recorded against it. Start by
 inspecting `service_records.csv` and `vehicles.csv`.
-
-```text
-vehicle_id,make,model,model_year,fuel_type,price_usd
-V001,Orion,Trail 2,2022,Hybrid,32000
-V002,Maple,City E,2023,Electric,41000
-V003,Northstar,Haul 150,2021,Gasoline,28500
-```
 
 Before loading, inspect the header, row count, nulls, duplicate `vehicle_id`
 values, and whether the values are intentionally synthetic. Prediction: a CSV
@@ -144,7 +137,7 @@ CREATE FILE FORMAT IF NOT EXISTS GARAGE_CSV_FORMAT
 SHOW FILE FORMATS IN SCHEMA GARAGE_PROD.RAW;
 ```
 
-### Load staged CSV files
+## Checkpoint 5 — Load staged CSV files
 
 After verifying the five files with `LIST`, load them in dependency order. Keep
 `ON_ERROR = 'ABORT_STATEMENT'` so a bad file does not silently produce a
@@ -231,30 +224,13 @@ SELECT * FROM VEHICLES
 WHERE fuel_type NOT IN ('Gasoline', 'Hybrid', 'Electric', 'Diesel');
 ```
 
-Do not upload files yet. Inspect the format and confirm that the delimiter is
-`,` and the header row is skipped. A pipe-delimited file would use
-`FIELD_DELIMITER = '|'` instead.
-
-Cleaning functions are a separate concern: SQL functions such as `TRIM`,
-`UPPER`, `TRY_TO_NUMBER`, and `TRY_TO_DATE` transform values during a query or
-load. The stage stores files, and the file format parses files; neither one
-automatically cleans business data.
-
-## Checkpoint 5 — Create and load the RAW tables
-
-Create five `RAW` tables with explicit Snowflake data types. Load the CSVs
-through Python using a narrowly scoped stage and `COPY INTO`. Load reference
-tables before dependent tables, then inspect row counts, sample rows, rejected
-files, and load history. Decide whether repeat runs replace data or append with
-duplicate protection before running the load twice.
-
-## Checkpoint 4 — Add a curated view
+## Checkpoint 7 — Add a curated view
 
 Create an approved `ANALYTICS.SERVICE_HISTORY` view joining vehicles and
 service records. Expose useful operational columns and demonstrate that a view
 stores a query definition, not a second independent copy of the tables.
 
-## Checkpoint 5 — Introduce Snowflake IAM/RBAC
+## Checkpoint 8 — Introduce Snowflake IAM/RBAC
 
 Create two narrowly scoped custom roles:
 
@@ -277,7 +253,7 @@ Phase 1 is complete when you can explain how the CSV became a typed table, why
 mean at a high level. You should also be able to inspect grants and clean up
 without touching `COMPUTE_WH`.
 
-Cleanup is reviewed explicitly. Do not drop `CAR_PROD` or its warehouse
+Cleanup is reviewed explicitly. Do not drop `GARAGE_PROD` or its warehouse
 automatically; protect the database until the phase review is complete.
 
 ## Choose the route
@@ -285,8 +261,8 @@ automatically; protect the database until the phase review is complete.
 - **Python-first:** generate/validate the CSV and run numbered SQL statements from a small script.
 - **Snowsight-first:** run numbered SQL manually and use Python for CSV validation/loading.
 
-Recommended first action: Python generates and validates `vehicles.csv`; no
-Snowflake resources are created in Checkpoint 1.
+The local CSVs, stage, file format, five RAW tables, analytics view, and RBAC
+tests are complete. Phase 1 is complete; the next workshop is Phase 2.
 
 ## Understanding questions
 
@@ -296,6 +272,21 @@ Snowflake resources are created in Checkpoint 1.
 ## Phase 1 command log
 
 This section keeps the runnable Snowsight commands in workshop order.
+
+### One-shot Python bootstrap
+
+After reviewing the SQL and completing the hands-on route, rerun this phase in
+another trial account with:
+
+```powershell
+python phases/phase-01-first-objects/setup_garage.py
+```
+
+The script is idempotent and uses the existing environment or ignored `.env`
+credentials. It connects as `USERADMIN` to create roles, then as `SYSADMIN` to
+create objects, grants, upload files, and load data. It does not drop objects
+or assign roles to a user; user-role assignment remains an explicit
+`SECURITYADMIN` action.
 
 ### Foundation
 
@@ -399,4 +390,52 @@ DESC TABLE GARAGE_PROD.RAW.DEALERSHIPS;
 DESC TABLE GARAGE_PROD.RAW.VEHICLES;
 DESC TABLE GARAGE_PROD.RAW.INVENTORY;
 DESC TABLE GARAGE_PROD.RAW.SERVICE_RECORDS;
+```
+
+### RBAC foundation
+
+Role creation requires `USERADMIN` (or a role with account-level `CREATE ROLE`)
+by default. Create the roles while using `USERADMIN`, then switch back to
+`SYSADMIN` for object grants. These statements do not assign the roles to your
+user yet.
+
+```sql
+USE ROLE USERADMIN;
+
+CREATE ROLE IF NOT EXISTS GARAGE_LOADER;
+CREATE ROLE IF NOT EXISTS GARAGE_READER;
+```
+
+Now switch to `SYSADMIN` and grant access to the objects it owns:
+
+```sql
+USE ROLE SYSADMIN;
+USE DATABASE GARAGE_PROD;
+
+GRANT USAGE ON WAREHOUSE COMPUTE_WH TO ROLE GARAGE_LOADER;
+GRANT USAGE ON WAREHOUSE COMPUTE_WH TO ROLE GARAGE_READER;
+
+GRANT USAGE ON DATABASE GARAGE_PROD TO ROLE GARAGE_LOADER;
+GRANT USAGE ON DATABASE GARAGE_PROD TO ROLE GARAGE_READER;
+GRANT USAGE ON SCHEMA GARAGE_PROD.RAW TO ROLE GARAGE_LOADER;
+GRANT USAGE ON SCHEMA GARAGE_PROD.ANALYTICS TO ROLE GARAGE_READER;
+
+GRANT READ ON STAGE GARAGE_PROD.RAW.GARAGE_CSV_STAGE TO ROLE GARAGE_LOADER;
+GRANT USAGE ON FILE FORMAT GARAGE_PROD.RAW.GARAGE_CSV_FORMAT TO ROLE GARAGE_LOADER;
+GRANT SELECT ON ALL TABLES IN SCHEMA GARAGE_PROD.RAW TO ROLE GARAGE_LOADER;
+GRANT INSERT ON ALL TABLES IN SCHEMA GARAGE_PROD.RAW TO ROLE GARAGE_LOADER;
+
+GRANT SELECT ON VIEW GARAGE_PROD.ANALYTICS.SERVICE_HISTORY
+  TO ROLE GARAGE_READER;
+
+SHOW GRANTS TO ROLE GARAGE_LOADER;
+SHOW GRANTS TO ROLE GARAGE_READER;
+```
+
+For isolated role testing, disable inherited secondary-role privileges first:
+
+```sql
+USE SECONDARY ROLES NONE;
+USE ROLE GARAGE_READER;
+SELECT CURRENT_ROLE(), CURRENT_SECONDARY_ROLES();
 ```

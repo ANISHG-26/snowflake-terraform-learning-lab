@@ -41,7 +41,9 @@ A schema is a namespace or room inside a database. `RAW` is our landing room;
 A stage stores files before loading. An internal stage is managed by Snowflake;
 an external stage points to cloud storage such as Amazon S3, Azure Blob, or
 Google Cloud Storage. A stage does not define table columns and does not clean
-the data.
+the data. Internal stages use `READ` and `WRITE` privileges rather than
+database-style `USAGE`: `READ` supports listing/reading staged files, while
+`WRITE` supports uploading or removing files.
 
 ### File format
 
@@ -85,6 +87,18 @@ Snowflake access usually requires privileges at each relevant level. For
 example, reading a view commonly requires database `USAGE`, schema `USAGE`,
 and `SELECT` on the view.
 
+Snowflake sessions can also use secondary roles. With secondary roles set to
+`ALL`, privileges from every role granted to the user may contribute to an
+operation. This can make a restricted-role test misleading. Use
+`USE SECONDARY ROLES NONE` when testing one role in isolation, then verify with
+`CURRENT_ROLE()` and `CURRENT_SECONDARY_ROLES()`.
+
+System roles have different jobs. `USERADMIN` normally creates users and
+custom roles. `SYSADMIN` normally creates warehouses, databases, schemas, and
+other database objects. `SECURITYADMIN` commonly manages grants. A role can be
+given the account-level `CREATE ROLE` privilege when an administrator
+deliberately wants it to create roles.
+
 ## Parsing versus cleaning
 
 These are related but different:
@@ -121,6 +135,12 @@ SHOW GRANTS TO ROLE GARAGE_READER;
 - `COPY INTO <table>`: loads staged files into a table using a file format.
 - `LIST @stage`: shows files currently in a stage.
 - `VALIDATION_MODE`: can help inspect load errors before committing rows.
+
+Loading with `COPY INTO` requires the loader role to have access to the named
+file format and, for this direct table-load pattern, `SELECT` and `INSERT` on
+the target table. This means the simple `GARAGE_LOADER` role is a controlled
+raw read/write role, not a write-only role. A more restrictive production
+pattern could isolate ingestion behind a procedure or service identity.
 
 ## Project object map
 
