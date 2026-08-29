@@ -1,6 +1,6 @@
 # Snowflake Sandbox Terraform POC
 
-A guided, public portfolio project for learning Snowflake, SQL, Python automation, and Terraform by building a small self-service sandbox platform with synthetic car data.
+A guided, public portfolio project for learning Snowflake, SQL, Python automation, and Terraform by building a small self-service data platform for a synthetic garage business.
 
 ```text
 CAR_PROD (synthetic template)

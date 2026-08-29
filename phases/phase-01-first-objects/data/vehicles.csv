@@ -1,0 +1,301 @@
+vehicle_id,manufacturer_id,model,model_year,fuel_type,color,price_usd
+V0001,M005,Meadow,2023,Electric,Blue,44168
+V0002,M005,Peak,2025,Gasoline,Blue,43723
+V0003,M003,Voyager,2022,Gasoline,Silver,30812
+V0004,M003,Haul 150,2020,Diesel,Silver,27446
+V0005,M002,North,2022,Diesel,Blue,45953
+V0006,M003,Pioneer,2023,Diesel,Red,24239
+V0007,M002,City E,2019,Diesel,Silver,42244
+V0008,M002,North,2023,Electric,Green,56186
+V0009,M002,Cedar,2023,Gasoline,Blue,40016
+V0010,M003,Voyager,2018,Gasoline,Silver,41599
+V0011,M002,Cedar,2020,Diesel,White,36487
+V0012,M001,Aster,2022,Gasoline,White,27807
+V0013,M002,North,2018,Electric,Black,41731
+V0014,M005,Ridge,2019,Electric,Silver,50933
+V0015,M003,Voyager,2022,Diesel,Black,30054
+V0016,M005,Ridge,2018,Gasoline,Green,34220
+V0017,M001,Aster,2020,Diesel,Blue,35653
+V0018,M002,Cedar,2020,Diesel,White,31618
+V0019,M004,Breeze,2019,Gasoline,Blue,35149
+V0020,M004,Breeze,2019,Gasoline,Black,29364
+V0021,M001,Summit,2021,Gasoline,Silver,37084
+V0022,M001,Trail 2,2019,Electric,Black,39840
+V0023,M002,North,2024,Hybrid,Green,45858
+V0024,M004,Lumen,2024,Hybrid,Silver,32630
+V0025,M005,Ridge,2019,Diesel,Green,27446
+V0026,M004,Breeze,2021,Gasoline,Red,28213
+V0027,M001,Aster,2024,Gasoline,Blue,38512
+V0028,M002,North,2020,Hybrid,Red,40884
+V0029,M001,Aster,2018,Electric,Silver,41963
+V0030,M001,Aster,2022,Hybrid,Green,43966
+V0031,M001,Summit,2025,Electric,Black,37095
+V0032,M002,North,2022,Electric,Green,45773
+V0033,M001,Summit,2021,Diesel,Green,23887
+V0034,M005,Peak,2019,Gasoline,Green,30682
+V0035,M002,North,2019,Hybrid,Red,46653
+V0036,M001,Aster,2022,Electric,Blue,56838
+V0037,M004,Lumen,2022,Gasoline,Red,28383
+V0038,M004,Lumen,2020,Hybrid,Black,35618
+V0039,M004,Arc,2022,Hybrid,Silver,33775
+V0040,M005,Peak,2023,Gasoline,Green,27863
+V0041,M005,Meadow,2025,Diesel,Silver,40445
+V0042,M004,Lumen,2020,Diesel,Silver,41359
+V0043,M001,Aster,2025,Electric,Red,53508
+V0044,M001,Trail 2,2022,Diesel,Green,45434
+V0045,M002,Cedar,2022,Gasoline,Silver,30652
+V0046,M002,North,2021,Electric,Green,52779
+V0047,M003,Haul 150,2024,Hybrid,Black,40495
+V0048,M004,Breeze,2019,Diesel,White,23820
+V0049,M003,Haul 150,2021,Gasoline,Green,37178
+V0050,M004,Breeze,2019,Hybrid,Red,29898
+V0051,M003,Voyager,2018,Electric,Blue,45925
+V0052,M004,Lumen,2019,Diesel,Black,37283
+V0053,M005,Meadow,2018,Electric,Silver,35021
+V0054,M002,Cedar,2024,Gasoline,Red,33431
+V0055,M004,Breeze,2018,Gasoline,Silver,43644
+V0056,M004,Breeze,2018,Hybrid,Black,49685
+V0057,M001,Trail 2,2021,Hybrid,Blue,36256
+V0058,M002,Cedar,2020,Diesel,Black,24546
+V0059,M005,Meadow,2021,Gasoline,Red,25112
+V0060,M001,Aster,2025,Electric,Silver,40556
+V0061,M003,Pioneer,2021,Electric,White,53939
+V0062,M003,Pioneer,2021,Diesel,Red,43643
+V0063,M002,North,2022,Electric,Silver,56852
+V0064,M003,Voyager,2022,Hybrid,Blue,36236
+V0065,M002,North,2025,Diesel,Green,31928
+V0066,M003,Haul 150,2024,Electric,Silver,38592
+V0067,M004,Breeze,2025,Hybrid,Red,48093
+V0068,M002,Cedar,2019,Electric,Red,34768
+V0069,M004,Breeze,2022,Diesel,Blue,42959
+V0070,M001,Aster,2023,Gasoline,Blue,38472
+V0071,M004,Breeze,2023,Diesel,Black,44644
+V0072,M003,Haul 150,2020,Diesel,Black,33974
+V0073,M003,Voyager,2025,Diesel,Blue,37594
+V0074,M004,Breeze,2022,Diesel,Red,39397
+V0075,M004,Arc,2020,Gasoline,Red,39996
+V0076,M004,Arc,2023,Diesel,Black,24603
+V0077,M005,Meadow,2018,Electric,Green,47500
+V0078,M001,Aster,2024,Diesel,Red,33185
+V0079,M003,Pioneer,2025,Diesel,Blue,40107
+V0080,M002,North,2019,Diesel,Green,30807
+V0081,M003,Voyager,2024,Gasoline,White,42826
+V0082,M003,Voyager,2025,Electric,Silver,53474
+V0083,M004,Lumen,2019,Hybrid,Blue,34484
+V0084,M004,Arc,2022,Diesel,White,25437
+V0085,M004,Breeze,2024,Gasoline,Silver,37178
+V0086,M004,Breeze,2025,Hybrid,Blue,40772
+V0087,M004,Arc,2024,Electric,White,50752
+V0088,M003,Pioneer,2024,Diesel,White,43319
+V0089,M002,Cedar,2019,Gasoline,Blue,30144
+V0090,M001,Aster,2019,Gasoline,Green,43181
+V0091,M005,Peak,2022,Gasoline,Red,38111
+V0092,M001,Summit,2023,Diesel,Black,26059
+V0093,M003,Voyager,2023,Hybrid,Black,28319
+V0094,M002,North,2018,Electric,Black,54412
+V0095,M005,Meadow,2023,Gasoline,Blue,24536
+V0096,M001,Trail 2,2023,Hybrid,Black,31251
+V0097,M001,Summit,2018,Diesel,Green,23173
+V0098,M004,Arc,2025,Hybrid,Blue,39702
+V0099,M004,Breeze,2020,Hybrid,Red,32857
+V0100,M001,Trail 2,2024,Gasoline,Red,28996
+V0101,M003,Voyager,2018,Diesel,Silver,41694
+V0102,M005,Peak,2019,Electric,Red,44750
+V0103,M003,Pioneer,2021,Diesel,Red,35012
+V0104,M002,North,2018,Gasoline,Blue,33930
+V0105,M001,Aster,2019,Hybrid,Black,39197
+V0106,M001,Summit,2022,Electric,Black,35919
+V0107,M001,Aster,2021,Gasoline,Green,26927
+V0108,M001,Summit,2024,Gasoline,Silver,27555
+V0109,M003,Pioneer,2018,Gasoline,Green,26792
+V0110,M004,Lumen,2020,Diesel,Red,29278
+V0111,M002,Cedar,2024,Hybrid,Blue,40664
+V0112,M001,Trail 2,2024,Gasoline,Black,39821
+V0113,M005,Meadow,2024,Gasoline,Black,26502
+V0114,M005,Ridge,2025,Hybrid,Silver,40214
+V0115,M005,Meadow,2019,Diesel,Blue,25882
+V0116,M003,Voyager,2023,Diesel,White,27312
+V0117,M002,North,2020,Hybrid,Blue,46873
+V0118,M001,Summit,2019,Hybrid,Silver,43102
+V0119,M001,Summit,2019,Gasoline,White,28793
+V0120,M005,Meadow,2020,Diesel,Blue,30317
+V0121,M005,Ridge,2020,Gasoline,Green,26063
+V0122,M002,City E,2023,Diesel,Silver,32766
+V0123,M003,Haul 150,2018,Electric,Red,37520
+V0124,M003,Haul 150,2022,Hybrid,Green,43655
+V0125,M005,Peak,2020,Diesel,Blue,45790
+V0126,M004,Lumen,2019,Diesel,White,32056
+V0127,M001,Aster,2022,Hybrid,White,49990
+V0128,M001,Summit,2021,Diesel,Blue,27964
+V0129,M002,North,2025,Electric,Blue,45208
+V0130,M005,Meadow,2024,Hybrid,Blue,35532
+V0131,M002,City E,2025,Hybrid,Red,31971
+V0132,M005,Ridge,2021,Electric,Silver,38515
+V0133,M004,Lumen,2019,Hybrid,Silver,38524
+V0134,M003,Voyager,2023,Gasoline,Green,23323
+V0135,M002,Cedar,2019,Electric,Silver,47058
+V0136,M002,City E,2022,Diesel,Green,44296
+V0137,M005,Ridge,2019,Diesel,White,42054
+V0138,M002,City E,2022,Diesel,Silver,37594
+V0139,M004,Lumen,2024,Diesel,White,38297
+V0140,M002,City E,2020,Gasoline,Silver,45078
+V0141,M005,Meadow,2023,Hybrid,Blue,37173
+V0142,M004,Breeze,2021,Gasoline,White,42991
+V0143,M004,Arc,2023,Gasoline,Black,45688
+V0144,M004,Breeze,2025,Diesel,White,44837
+V0145,M002,Cedar,2018,Hybrid,Red,36630
+V0146,M005,Peak,2020,Gasoline,White,27833
+V0147,M001,Summit,2022,Gasoline,Red,39367
+V0148,M003,Voyager,2025,Hybrid,Black,30240
+V0149,M001,Aster,2018,Hybrid,Blue,40788
+V0150,M001,Aster,2023,Hybrid,Black,29510
+V0151,M002,North,2023,Electric,Green,50859
+V0152,M003,Voyager,2024,Hybrid,Black,40994
+V0153,M002,North,2021,Gasoline,Green,31500
+V0154,M001,Trail 2,2022,Diesel,White,41257
+V0155,M004,Lumen,2022,Gasoline,Silver,28998
+V0156,M004,Arc,2024,Electric,Black,39810
+V0157,M001,Trail 2,2018,Gasoline,Red,25815
+V0158,M004,Breeze,2020,Diesel,Blue,30565
+V0159,M001,Trail 2,2020,Hybrid,Black,38379
+V0160,M005,Meadow,2024,Gasoline,Red,27466
+V0161,M004,Lumen,2023,Hybrid,Green,39376
+V0162,M005,Peak,2022,Diesel,Red,38709
+V0163,M005,Meadow,2021,Diesel,Red,26613
+V0164,M005,Meadow,2020,Gasoline,Blue,41884
+V0165,M005,Meadow,2021,Diesel,Black,39393
+V0166,M004,Breeze,2025,Gasoline,Blue,41918
+V0167,M004,Arc,2024,Electric,Black,44587
+V0168,M003,Voyager,2025,Hybrid,Red,49697
+V0169,M001,Summit,2023,Electric,Green,40033
+V0170,M003,Haul 150,2020,Hybrid,Green,48382
+V0171,M005,Meadow,2022,Diesel,Black,37747
+V0172,M004,Arc,2022,Gasoline,Silver,35774
+V0173,M001,Aster,2023,Electric,White,47819
+V0174,M003,Haul 150,2021,Hybrid,Black,40234
+V0175,M002,City E,2019,Electric,Red,45984
+V0176,M003,Voyager,2020,Electric,Silver,40648
+V0177,M002,City E,2025,Gasoline,Black,43899
+V0178,M002,City E,2023,Hybrid,Green,37183
+V0179,M002,City E,2020,Hybrid,Black,40224
+V0180,M001,Trail 2,2025,Diesel,Silver,40689
+V0181,M005,Ridge,2018,Diesel,Black,36758
+V0182,M001,Summit,2022,Diesel,Black,39176
+V0183,M002,Cedar,2025,Diesel,Red,39782
+V0184,M005,Peak,2020,Hybrid,Green,38100
+V0185,M003,Voyager,2023,Gasoline,Black,32800
+V0186,M004,Arc,2021,Gasoline,White,37101
+V0187,M004,Breeze,2018,Hybrid,Green,50355
+V0188,M002,City E,2020,Gasoline,Red,27181
+V0189,M002,City E,2022,Hybrid,Blue,29033
+V0190,M002,North,2018,Gasoline,Silver,42398
+V0191,M005,Peak,2025,Diesel,White,28356
+V0192,M001,Summit,2020,Hybrid,Red,35465
+V0193,M005,Ridge,2021,Diesel,Silver,32870
+V0194,M005,Ridge,2023,Electric,Silver,54143
+V0195,M005,Meadow,2024,Electric,Silver,55339
+V0196,M002,City E,2021,Gasoline,Green,37257
+V0197,M005,Ridge,2024,Gasoline,Silver,31283
+V0198,M002,City E,2022,Gasoline,Silver,23090
+V0199,M002,North,2019,Gasoline,Red,45216
+V0200,M003,Haul 150,2019,Gasoline,Blue,38426
+V0201,M005,Meadow,2025,Gasoline,Black,33470
+V0202,M002,Cedar,2018,Gasoline,Blue,34607
+V0203,M001,Trail 2,2022,Hybrid,Green,33443
+V0204,M003,Haul 150,2018,Diesel,Red,39619
+V0205,M004,Lumen,2021,Electric,Red,43468
+V0206,M003,Voyager,2019,Diesel,White,45097
+V0207,M002,Cedar,2023,Diesel,Red,35939
+V0208,M002,Cedar,2019,Gasoline,Blue,32880
+V0209,M001,Trail 2,2020,Electric,Black,47655
+V0210,M005,Ridge,2020,Hybrid,Silver,37300
+V0211,M004,Lumen,2018,Electric,Silver,40237
+V0212,M005,Ridge,2021,Hybrid,Black,44934
+V0213,M005,Ridge,2018,Electric,White,50131
+V0214,M003,Pioneer,2021,Diesel,Silver,44067
+V0215,M003,Pioneer,2020,Electric,Blue,50526
+V0216,M002,Cedar,2021,Hybrid,White,29565
+V0217,M003,Haul 150,2019,Hybrid,Red,49559
+V0218,M005,Meadow,2019,Hybrid,White,45449
+V0219,M001,Trail 2,2019,Gasoline,Blue,28043
+V0220,M005,Ridge,2022,Diesel,Black,32071
+V0221,M005,Ridge,2021,Electric,Red,43087
+V0222,M002,City E,2022,Diesel,Blue,29645
+V0223,M004,Lumen,2023,Electric,White,45102
+V0224,M005,Peak,2020,Gasoline,Blue,38817
+V0225,M002,Cedar,2021,Diesel,Silver,38053
+V0226,M001,Trail 2,2018,Gasoline,Blue,39331
+V0227,M005,Peak,2020,Hybrid,Black,49966
+V0228,M005,Meadow,2018,Electric,Blue,38080
+V0229,M002,Cedar,2022,Electric,Silver,48589
+V0230,M003,Pioneer,2023,Electric,White,39419
+V0231,M004,Lumen,2018,Electric,Red,42751
+V0232,M001,Summit,2019,Hybrid,Blue,50616
+V0233,M005,Meadow,2019,Gasoline,Blue,34081
+V0234,M005,Meadow,2024,Electric,Black,44241
+V0235,M005,Ridge,2025,Diesel,Green,30061
+V0236,M005,Ridge,2023,Diesel,Black,41142
+V0237,M005,Ridge,2022,Diesel,Blue,40656
+V0238,M002,City E,2019,Diesel,Red,42064
+V0239,M002,City E,2019,Gasoline,Green,23660
+V0240,M002,City E,2020,Hybrid,Silver,32780
+V0241,M001,Aster,2023,Diesel,Silver,42287
+V0242,M003,Haul 150,2024,Hybrid,Red,43781
+V0243,M005,Ridge,2022,Diesel,Black,42606
+V0244,M001,Summit,2022,Diesel,Blue,37125
+V0245,M005,Peak,2023,Electric,White,54147
+V0246,M002,Cedar,2022,Diesel,Green,36667
+V0247,M003,Voyager,2024,Electric,Black,44037
+V0248,M003,Voyager,2024,Diesel,Silver,33546
+V0249,M002,Cedar,2025,Hybrid,Blue,30085
+V0250,M004,Lumen,2025,Electric,White,48542
+V0251,M001,Aster,2024,Diesel,Black,41513
+V0252,M003,Voyager,2023,Electric,White,49041
+V0253,M003,Pioneer,2025,Hybrid,Silver,32990
+V0254,M003,Haul 150,2018,Hybrid,Black,41763
+V0255,M005,Peak,2019,Hybrid,White,37431
+V0256,M002,City E,2022,Hybrid,Green,49300
+V0257,M005,Meadow,2019,Gasoline,Silver,40435
+V0258,M003,Haul 150,2024,Diesel,White,43936
+V0259,M004,Lumen,2020,Hybrid,Green,39487
+V0260,M004,Lumen,2021,Gasoline,Blue,39559
+V0261,M001,Summit,2024,Hybrid,Silver,45558
+V0262,M004,Breeze,2024,Electric,Silver,39040
+V0263,M005,Ridge,2019,Hybrid,Green,28831
+V0264,M003,Pioneer,2019,Diesel,White,24764
+V0265,M005,Peak,2024,Electric,White,49909
+V0266,M001,Summit,2022,Diesel,Silver,44316
+V0267,M002,North,2019,Diesel,Green,27640
+V0268,M003,Voyager,2020,Gasoline,Green,42388
+V0269,M002,Cedar,2023,Gasoline,Black,27664
+V0270,M001,Summit,2018,Hybrid,Green,48001
+V0271,M003,Voyager,2025,Diesel,Black,39066
+V0272,M002,City E,2019,Hybrid,Green,43469
+V0273,M003,Voyager,2022,Gasoline,Red,34716
+V0274,M002,City E,2020,Hybrid,Red,42859
+V0275,M005,Peak,2024,Gasoline,Black,28434
+V0276,M004,Arc,2020,Diesel,White,24415
+V0277,M003,Voyager,2018,Diesel,Green,32655
+V0278,M001,Aster,2024,Electric,Silver,48110
+V0279,M002,Cedar,2022,Diesel,Black,28500
+V0280,M003,Haul 150,2025,Hybrid,White,46871
+V0281,M005,Meadow,2022,Diesel,Green,25287
+V0282,M004,Lumen,2020,Diesel,Red,43946
+V0283,M003,Voyager,2020,Electric,White,51209
+V0284,M001,Summit,2020,Gasoline,Green,43732
+V0285,M005,Peak,2021,Electric,Green,51644
+V0286,M002,City E,2018,Diesel,Black,44843
+V0287,M001,Trail 2,2024,Gasoline,Blue,28914
+V0288,M002,City E,2021,Hybrid,Red,34062
+V0289,M001,Trail 2,2025,Hybrid,Red,44265
+V0290,M005,Meadow,2020,Hybrid,Black,43487
+V0291,M001,Summit,2018,Hybrid,Blue,41842
+V0292,M003,Voyager,2018,Diesel,Green,34957
+V0293,M003,Pioneer,2018,Electric,Blue,42308
+V0294,M001,Trail 2,2023,Diesel,Green,32846
+V0295,M005,Peak,2022,Gasoline,White,43232
+V0296,M002,North,2025,Electric,Red,42333
+V0297,M001,Summit,2022,Electric,Silver,55569
+V0298,M002,North,2020,Electric,Blue,39649
+V0299,M003,Haul 150,2019,Gasoline,Green,43601
+V0300,M001,Trail 2,2021,Electric,Silver,37069

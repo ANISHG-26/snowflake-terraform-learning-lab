@@ -5,7 +5,7 @@ Each phase is a self-contained workshop. Later guides stay short until we reach 
 | Phase | Workshop | Outcome | Status |
 |---|---|---|---|
 | 0 | [Setup and safe connection](phases/phase-00-setup/README.md) | Check tools and inspect session context without creating objects | Complete |
-| 1 | [First Snowflake objects](phases/phase-01-first-objects/README.md) | Create one warehouse, database, table, and view | Not started |
+| 1 | [Garage data foundation](phases/phase-01-first-objects/README.md) | Generate five related CSVs, load a garage database, and practice scoped grants | In progress |
 | 2 | [Synthetic car template](phases/phase-02-car-template/README.md) | Build `CAR_PROD` and validate with Python | Not started |
 | 3 | [Clone and isolation](phases/phase-03-clone-isolation/README.md) | Clone and prove isolation | Not started |
 | 4 | [Roles and publication](phases/phase-04-rbac-publication/README.md) | Separate ownership, team access, and consumption | Not started |
