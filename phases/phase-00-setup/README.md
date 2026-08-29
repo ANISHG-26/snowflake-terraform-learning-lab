@@ -61,6 +61,15 @@ python phases/phase-00-setup/check_identity.py
 Expected result: the script prints your session context, including `SYSADMIN`
 and `COMPUTE_WH`. It does not create or modify Snowflake resources.
 
+## Completion checkpoint
+
+Phase 0 is complete when you can explain that `CURRENT_ROLE()` reports the role
+active for the session, that the role controls available privileges, and that
+the Python script can inspect session context without changing Snowflake.
+
+Sanitized result recorded: active role `SYSADMIN`; active warehouse
+`COMPUTE_WH`; Python read-only identity check succeeded.
+
 ## Checkpoint
 
 1. What does `CURRENT_ROLE()` tell you and why does it matter?

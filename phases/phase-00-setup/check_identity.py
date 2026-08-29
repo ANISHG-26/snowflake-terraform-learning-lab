@@ -8,6 +8,7 @@ import os
 import sys
 
 import snowflake.connector
+from dotenv import load_dotenv
 
 
 IDENTITY_QUERY = """
@@ -30,6 +31,7 @@ def required_setting(name: str) -> str:
 
 
 def main() -> int:
+    load_dotenv()
     try:
         connection_options = {
             "user": required_setting("SNOWFLAKE_USER"),

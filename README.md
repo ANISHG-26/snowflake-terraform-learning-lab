@@ -27,4 +27,6 @@ Tracked files must remain portfolio-safe. Account-specific observations and sess
 
 - Python 3.12, Terraform 1.8.4, and Git are installed.
 - Snowflake CLI was not found during the initial check.
+- Phase 0 complete: Python made a successful read-only Snowflake connection.
 - No Snowflake resources have been created or modified.
+- Next: Phase 1 — create the first small Snowflake objects after reviewing the safety and cost implications.
